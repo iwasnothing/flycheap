@@ -48,7 +48,7 @@ cred = credentials.Certificate(key)
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-lines = open('../cities.txt').read().split("\n")
+lines = open('cities.txt').read().split("\n")
 for dest in lines:
     print(dest)
     if(len(dest)>0):

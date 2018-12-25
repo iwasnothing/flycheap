@@ -9,7 +9,7 @@ import time
 import random
 
 def search_flight(future_days=2,trip_days=7,year=2019,month=1,startday=1):
-    lines = open('../cities.txt').read().split("\n")
+    lines = open('cities.txt').read().split("\n")
     f = open('parm.csv','w')
     for dest in lines:
         fromport='HKG'
