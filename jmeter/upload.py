@@ -7,19 +7,22 @@ from firebase_admin import firestore
 
 
 def parse_flight(flight):
-    doc = {
-        'from': flight['segments'][0]['departureStationCode'],
-        'to': flight['segments'][0]['arrivalStationCode'],
-        'date': flight['segments'][0]['departureDate'],
-        'fightnum': flight['segments'][0]['flightNumber'],
-        'price': flight['fares'][0]['amount']
-    }
-    if(doc['from'] == 'HKG'):
-        doc['return'] = 0
-        doc['dest'] = doc['to']
+    if(len(flight['segments']) > 0 and len(flight['fares'])>0 ):
+        doc = {
+            'from': flight['segments'][0]['departureStationCode'],
+            'to': flight['segments'][0]['arrivalStationCode'],
+            'date': flight['segments'][0]['departureDate'],
+            'fightnum': flight['segments'][0]['flightNumber'],
+            'price': flight['fares'][0]['amount']
+        }
+        if(doc['from'] == 'HKG'):
+            doc['return'] = 0
+            doc['dest'] = doc['to']
+        else:
+            doc['return'] = 1
+            doc['dest'] = doc['from']
     else:
-        doc['return'] = 1
-        doc['dest'] = doc['from']
+        doc = {}
     print(doc)
     return doc
 
@@ -39,13 +42,19 @@ def delete_collection(coll_ref, batch_size):
 def upload_flight(flight):
     db = firestore.client()
     doc = parse_flight(flight)
-    dest = doc['dest']
-    print(dest)
-    db.collection('cities').document(dest).collection('flight').add(doc)
+    if('dest' in doc):
+        dest = doc['dest']
+        print(dest)
+        db.collection('cities').document(dest).collection('flight').add(doc)
 
-key="./flycheap-285b7-firebase-adminsdk-q6d7x-699ad6ba77.json"
-cred = credentials.Certificate(key)
-firebase_admin.initialize_app(cred)
+#key="./flycheap-285b7-firebase-adminsdk-x801c-bd169e69cf.json"
+found=0
+for key in glob.glob('flycheap-*.json'):
+    cred = credentials.Certificate(key)
+    firebase_admin.initialize_app(cred)
+    found = 1
+if(found == 0):
+    firebase_admin.initialize_app()
 db = firestore.client()
 
 lines = open('cities.txt').read().split("\n")
