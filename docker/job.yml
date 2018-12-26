@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: jmeter-test
+spec:
+  template:
+    spec:
+      containers:
+      - name: jmeter-test
+        image: gcr.io/flycheap-285b7/flycheap-master
+        command: ["/opt/apache-jmeter-5.0/bin/jmeter",  "-n","-t", "hkexpress.jmx" ,"-GLOOPCNT=101", "-GDIR=/app/flycheap/jmeter"]
+      restartPolicy: Never
+  backoffLimit: 4

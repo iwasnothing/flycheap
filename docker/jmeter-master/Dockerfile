@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM openjdk:latest
 
 RUN apt-get update \
 && apt-get install -y python3-pip python3-dev \
@@ -15,8 +15,4 @@ RUN apt-get update \
 && apt-get -y install unzip \
 && unzip chromedriver_linux64.zip \
 && tar -zxvf apache-jmeter-5.0.tgz -C /opt \
-&& pip install -r flycheap/requirements.txt
-RUN cd /app//app/flycheap/jmeter \
-&& python gen_parm.py gen 30
-WORKDIR /opt/apache-jmeter-5.0/bin
-ENTRYPOINT jmeter-server
+&& pip3 install -r flycheap/requirements.txt
