@@ -7,10 +7,10 @@ spec:
     spec:
       containers:
       - name: jmeter-test01
-        image: gcr.io/flycheap-285b7/flycheap-master
+        image: gcr.io/iwasnothing03/flycheap-master
         env:
-          -name: CODE
-          -value: 94077079
+          - name: CODE
+            value: "94077079"
         command: ["/app/flycheap/jmeter/startjob.sh"]
       restartPolicy: Never
   backoffLimit: 4
