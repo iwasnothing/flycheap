@@ -8,6 +8,7 @@ kubectl create -f onejob.yml
 n=0
 while [ $n -ne 1 ] ; do
         echo "gettig pod"
+        kubectl get pods --output=wide
         n=`kubectl get pods --output=wide|grep -c Running`
         sleep 3
 done
