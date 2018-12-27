@@ -2,9 +2,16 @@
 
 HOMEDIR='/app/flycheap/jmeter'
 cd $HOMEDIR
-rm -f flight0*json
-python gen_parm.py gen 30
-#N=`wc -l nodeparm.csv|awk '{print $1}'`
-#echo $N
-#/opt/apache-jmeter-5.0/bin/jmeter -n -t hkexpress.jmx -JLOOPCNT=$N -JDIR=$HOMEDIR
-/opt/apache-jmeter-5.0/bin/jmeter-server
+zip -P 94077079 key.zip flycheap*json
+
+gcloud container clusters create flycheap01 --zone=us-central1-a --num-nodes=1 --preemptible
+gcloud container clusters get-credentials --zone=us-central1-a flycheap01
+n=0
+while [ n -ne 3] ; do
+  n=`kubectl get pods --output=wide|grep -c Running`
+done
+IPLIST=`kubectl get pods --output=wide|grep flycheap|awk '{print $6}'`
+PODLIST=`kubectl get pods --output=wide|grep flycheap|awk '{print $1}'`
+kubectl cp parm.csv $PODLIST:/app/flycheap/jmeter/parm.csv
+kubectl cp key.zip $PODLIST:/app/flycheap/jmeter/key.zip
+kubectl create -f onejob.yml
