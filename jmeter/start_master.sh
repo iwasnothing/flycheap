@@ -1,7 +1,7 @@
 #!/bin/sh
 #gcloud components install kubectl
 sudo apt-get install kubectl
-
+gcloud builds submit --tag gcr.io/iwasnothing03/flycheap-master
 #gcloud builds submit --tag gcr.io/iwasnothing03/flycheap-slave .
 gcloud container clusters create flycheap01 --zone=us-central1-a --num-nodes=4 --preemptible
 gcloud container clusters get-credentials --zone=us-central1-a flycheap01
