@@ -2,7 +2,7 @@
 
 HOMEDIR='/app/flycheap/jmeter'
 cd $HOMEDIR
-zip -P 94077079 key.zip flycheap*json
+#zip -P 94077079 key.zip flycheap*json
 
 gcloud container clusters create flycheap01 --zone=us-central1-a --num-nodes=1 --preemptible
 gcloud container clusters get-credentials --zone=us-central1-a flycheap01

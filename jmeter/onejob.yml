@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: jmeter-test01
+spec:
+  template:
+    spec:
+      containers:
+      - name: jmeter-test01
+        image: gcr.io/flycheap-285b7/flycheap-master
+        env:
+          -name: CODE
+          -value: 94077079
+        command: ["/app/flycheap/jmeter/startjob.sh"]
+      restartPolicy: Never
+  backoffLimit: 4
