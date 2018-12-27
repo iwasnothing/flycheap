@@ -14,7 +14,9 @@ ls |grep flight|grep json|wc -l
 echo "upload"
 ls|grep flycheap|grep firebase|grep adminsdk|grep json|xargs rm -f
 while [ ! -f key.zip ] ; do
+  pwd
   echo "waiting key"
+  echo $CODE
   sleep 5
 done
 
