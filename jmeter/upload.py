@@ -4,7 +4,8 @@ import json
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-
+from datetime import date
+from datetime import timedelta
 
 def parse_flight(flight):
     if(len(flight['segments']) > 0 and len(flight['fares'])>0 ):
@@ -56,6 +57,12 @@ for key in glob.glob('flycheap-*.json'):
 if(found == 0):
     firebase_admin.initialize_app()
 db = firestore.client()
+
+data = {
+    'update': date.today().isoformat(),
+
+}
+db.collection('config').document('timestamp').set(data)
 
 lines = open('cities.txt').read().split("\n")
 for dest in lines:

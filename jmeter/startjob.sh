@@ -12,8 +12,7 @@ echo "test completed"
 ls |grep flight|grep json|wc -l
 echo "upload"
 ls|grep flycheap|grep firebase|grep adminsdk|grep json|xargs rm -f
-while[ ! -f key.zip ]
-do
+while [ ! -f key.zip ] ; do
   echo "waiting key"
   sleep 5
 done

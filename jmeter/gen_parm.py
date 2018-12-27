@@ -86,6 +86,24 @@ elif ( len(sys.argv) >= 3 and sys.argv[1] == 'gen'):
         print('idx value: {} {} {} {} {}'.format(i,l,batch_size,startidx,endidx))
         for row in datalist[startidx:endidx]:
             outf.write(row+'\n')
+elif ( len(sys.argv) >= 3 and sys.argv[1] == 'genall'):
+        future=int(sys.argv[2])
+        today = date.today() + timedelta(days=1)
+        datalist=search_flight(future,7,today.year,today.month,today.day)
+        doc = city_ref.get().to_dict()
+        totalnode = doc['total']
+        l=len(datalist)
+        batch_size = int(l/totalnode)+1
+        for i in range(totalnode):
+            startidx = i*batch_size
+            if(i == totalnode -1):
+                endidx = l
+            else:
+                endidx = (i+1)*batch_size
+            outf = open('nodeparm_{}.csv'.format(i),'w')
+            print('idx value: {} {} {} {} {}'.format(i,l,batch_size,startidx,endidx))
+            for row in datalist[startidx:endidx]:
+                outf.write(row+'\n')
 else:
     print("python gen_parm.py init 3\n")
     print("python gen_parm.py gen 30\n")
