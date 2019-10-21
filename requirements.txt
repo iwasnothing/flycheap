@@ -29,4 +29,4 @@ requests==2.21.0
 rsa==4.0
 selenium==3.14.1
 six==1.11.0
-urllib3==1.24.1
+urllib3==1.24.2
