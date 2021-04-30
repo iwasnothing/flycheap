@@ -26,7 +26,7 @@ pyOpenSSL==18.0.0
 PySocks==1.6.8
 pytz==2018.7
 requests==2.21.0
-rsa==4.0
+rsa==4.7
 selenium==3.14.1
 six==1.11.0
 urllib3==1.24.1
